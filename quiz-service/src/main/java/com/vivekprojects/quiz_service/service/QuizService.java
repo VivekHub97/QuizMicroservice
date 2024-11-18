@@ -38,33 +38,22 @@ public class QuizService {
 
 	public ResponseEntity<List<QuestionWrapper>> getQuizQuestions(Integer id) {
 		// TODO Auto-generated method stub
-//		Optional<Quiz> quiz = quizDao.findById(id);
-//		List<Question> questionsFromDB = quiz.get().getQuestions();
-		List<QuestionWrapper> questionsForUser = new ArrayList<QuestionWrapper>();
-//		
-//		for(Question q : questionsFromDB) {
-//			QuestionWrapper qw = new QuestionWrapper(q.getId(), q.getQuestionTitle(), q.getOption1(), q.getOption2(), q.getOption3(), q.getOption4());
-//			questionsForUser.add(qw);
-//		}
 		
-		return new ResponseEntity<>(questionsForUser, HttpStatus.OK);
+		Quiz quiz = quizDao.findById(id).get();
+		List<Integer> questionIds = quiz.getQuestionIds();
+
+		ResponseEntity<List<QuestionWrapper>> questions = quizInterface.getQuestionFromId(questionIds);
+		
+		return questions;
 				
 	}
 
 	public ResponseEntity<Integer> getResult(Integer id, List<Response> responses) {
 		// TODO Auto-generated method stub
-//		Quiz quiz = quizDao.findById(id).get();
-//		List<Question> questions = quiz.getQuestions();
-//		
-//		int i = 0;
-		int right = 0;
-//		for(Response response : responses){
-//			if(response.getResponse().equals(questions.get(i).getRightAnswer())) {
-//				right++;
-//			}			
-//			i++;
-//		}
-		return new ResponseEntity<>(right, HttpStatus.OK);		
+
+		ResponseEntity<Integer> result = quizInterface.getScore(responses);
+		
+		return result;	
 	}
 	
 }
