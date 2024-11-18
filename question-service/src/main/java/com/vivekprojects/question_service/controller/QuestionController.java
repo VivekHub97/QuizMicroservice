@@ -55,7 +55,7 @@ public class QuestionController {
 	}
 	
 	
-	// getQuestions (questionid)
+	// getQuestions (questionid) for Quiz (only title and options)
 	@PostMapping("getQuestions")
 	public ResponseEntity<List<QuestionWrapper>> getQuestionFromId(@RequestBody List<Integer> questionIds) {
 	
