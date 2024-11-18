@@ -2,7 +2,6 @@ package com.vivekprojects.quiz_service.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.vivekprojects.quiz_service.dao.QuizDao;
+import com.vivekprojects.quiz_service.feign.QuizInterface;
 import com.vivekprojects.quiz_service.model.QuestionWrapper;
 import com.vivekprojects.quiz_service.model.Quiz;
 import com.vivekprojects.quiz_service.model.Response;
@@ -20,19 +20,18 @@ public class QuizService {
 	@Autowired
 	QuizDao quizDao;
 	
-//	@Autowired
-//	QuestionDao questionDao;
-
+	@Autowired
+	QuizInterface quizInterface;
+	
 	public ResponseEntity<String> createQuiz(String category, int numQ, String title) {
 		// TODO Auto-generated method stub
 		// quizService needs to interact with questionService
 		
-//		List<Integer> questions = //
-//		
-//		Quiz quiz = new Quiz();
-//		quiz.setTitle(title);
-//		quiz.setQuestions(questions);
-//		quizDao.save(quiz);
+		List<Integer> questions = quizInterface.getQuestionForQuiz(category, numQ).getBody();
+		Quiz quiz = new Quiz();
+		quiz.setTitle(title);
+		quiz.setQuestionIds(questions);
+		quizDao.save(quiz);	
 		
 		return new ResponseEntity<>("Success", HttpStatus.CREATED);
 	}
