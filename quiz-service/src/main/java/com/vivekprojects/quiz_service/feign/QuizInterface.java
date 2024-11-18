@@ -16,14 +16,14 @@ import com.vivekprojects.quiz_service.model.Response;
 public interface QuizInterface {
 	
 	// generate
-	@GetMapping("generate")
+	@GetMapping("question/generate")
 	public ResponseEntity<List<Integer>> getQuestionForQuiz(@RequestParam String categoryName, @RequestParam Integer numQuestions);
 	
 	// getQuestions (questionid) for Quiz (only title and options)
-	@PostMapping("getQuestions")
+	@PostMapping("question/getQuestions")
 	public ResponseEntity<List<QuestionWrapper>> getQuestionFromId(@RequestBody List<Integer> questionIds);
 	
 	// getScore
-	@PostMapping("getScore")
+	@PostMapping("question/getScore")
 	public ResponseEntity<Integer> getScore(@RequestBody List<Response> responses);
 }
